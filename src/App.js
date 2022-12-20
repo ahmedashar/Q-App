@@ -1,15 +1,17 @@
+// for reduxStore
+import { Provider } from "react-redux";
+import { store } from "./store";
+//
 import "./App.css";
 import Router from "./config/router";
 
-import Login from "./views/Login";
-
 function App() {
   return (
-    <div className="App">
-      <h1>Welcome to Q-App</h1>
-
-      <Router />
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <Router />
+      </div>
+    </Provider>
   );
 }
 

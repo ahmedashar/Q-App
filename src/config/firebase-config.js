@@ -5,8 +5,14 @@ import {
   FacebookAuthProvider,
   onAuthStateChanged,
 } from "firebase/auth";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
-
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  addDoc,
+  collection,
+} from "firebase/firestore";
+import { getStorage, uploadBytes, ref, getDownloadURL } from "firebase/storage";
 const firebaseConfig = {
   apiKey: "AIzaSyB_MYspaDUKDr4PngRSta5YiYClHJeoc5E",
   authDomain: "qapp-aa3a5.firebaseapp.com",
@@ -20,6 +26,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const authentication = getAuth(app);
 const database = getFirestore(app);
+const storage = getStorage(app);
 
 // function call from Login Component
 const facebookSignIn = async () => {
@@ -44,6 +51,38 @@ const addUserToDB = async (userInfo) => {
     console.log("error in DataStore: " + e.message);
   }
 };
+// upload img
+async function uploadImage(adImg) {
+  const storageRef = ref(storage, `images/${adImg.name}`);
+  const snapshot = await uploadBytes(storageRef, adImg);
+  const url = await getDownloadURL(snapshot.ref);
+  return url;
+}
+
+// for add new company to db
+function addCompanyToDb(cName, since, openTime, closeTime, imgUrl) {
+  const userId = authentication.currentUser.uid;
+  return addDoc(collection(database, "companies"), {
+    cName,
+    since,
+    openTime,
+    closeTime,
+    imgUrl,
+    userId,
+  });
+}
+
+// get company data from db
+async function getCompaniesFromDb() {
+  const querySnapshot = await getDocs(collection(database, "ads"));
+  const ads = [];
+
+  querySnapshot.forEach((doc) => {
+    ads.push({ id: doc.id, ...doc.data() });
+  });
+  return ads;
+}
+
 // .then((re) => {
 //   console.log(re);
 //   console.log("After Login: " + re.user.uid);
@@ -65,4 +104,4 @@ const addUserToDB = async (userInfo) => {
 //   });
 // };
 
-export { facebookSignIn };
+export { facebookSignIn, authentication, uploadImage, addCompanyToDb };

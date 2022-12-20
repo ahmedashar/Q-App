@@ -1,5 +1,7 @@
 import { facebookSignIn } from "../../config/firebase-config";
 import { useNavigate } from "react-router-dom";
+// calling action (redux store)
+import { useDispatch } from "react-redux";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -15,8 +17,11 @@ export default function Login() {
   };
 
   return (
-    <button className="SignIn_Btn" onClick={signInWithFacebook}>
-      Sign In With Facebook
-    </button>
+    <div>
+      <h1>Welcome to Q app</h1>
+      <button className="SignIn_Btn" onClick={signInWithFacebook}>
+        Sign In With Facebook
+      </button>
+    </div>
   );
 }
