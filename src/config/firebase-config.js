@@ -9,7 +9,9 @@ import {
   getFirestore,
   doc,
   setDoc,
+  getDocs,
   addDoc,
+  getDoc,
   collection,
 } from "firebase/firestore";
 import { getStorage, uploadBytes, ref, getDownloadURL } from "firebase/storage";
@@ -74,13 +76,27 @@ function addCompanyToDb(cName, since, openTime, closeTime, imgUrl) {
 
 // get company data from db
 async function getCompaniesFromDb() {
-  const querySnapshot = await getDocs(collection(database, "ads"));
-  const ads = [];
+  const querySnapshot = await getDocs(collection(database, "companies"));
+  const companies = [];
 
   querySnapshot.forEach((doc) => {
-    ads.push({ id: doc.id, ...doc.data() });
+    companies.push({ id: doc.id, ...doc.data() });
   });
-  return ads;
+  return companies;
+}
+
+// get perticular company data (for CompToken)
+async function getComFromDb(id) {
+  const docRef = doc(database, "companies", id);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+    return docSnap.data();
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
 }
 
 // .then((re) => {
@@ -104,4 +120,11 @@ async function getCompaniesFromDb() {
 //   });
 // };
 
-export { facebookSignIn, authentication, uploadImage, addCompanyToDb };
+export {
+  facebookSignIn,
+  authentication,
+  uploadImage,
+  addCompanyToDb,
+  getCompaniesFromDb,
+  getComFromDb,
+};

@@ -1,5 +1,11 @@
-import { useState } from "react";
-import { uploadImage, addCompanyToDb } from "../../config/firebase-config";
+import { useState, useEffect } from "react";
+import RegisterComp from "../../components/RegisterComp";
+import {
+  uploadImage,
+  addCompanyToDb,
+  getCompaniesFromDb,
+} from "../../config/firebase-config";
+import "./style.css";
 
 const Company = () => {
   let [viewForm, setViewForm] = useState(false);
@@ -8,6 +14,8 @@ const Company = () => {
   let [fileSelect, setFileSelect] = useState({});
   let [openTime, setOpenTime] = useState("");
   let [closeTime, setCloseTime] = useState("");
+  // for registered company
+  const [comp, setComp] = useState([]);
 
   const addCompanytoFirebase = async () => {
     try {
@@ -19,19 +27,47 @@ const Company = () => {
       alert(error.message);
     }
   };
+  const getCompanyData = async () => {
+    const rCompanies = await getCompaniesFromDb();
+    setComp(rCompanies);
+    console.log(rCompanies);
+  };
 
-  if (viewForm == false) {
+  useEffect(() => {
+    getCompanyData();
+  }, [viewForm]);
+  // view companies and add new company
+  if (viewForm === false) {
     return (
       <div>
-        <h1>Companies</h1>
+        <h2 style={{ color: "#4ecbc7" }}>Register New Company</h2>
         <div>
           <button
             onClick={() => {
               setViewForm(true);
             }}
           >
-            Add Your Company
+            Click here
           </button>
+        </div>
+
+        <h2 style={{ paddingTop: "50px", color: "#4ecbc7" }}>
+          Registered Companies
+        </h2>
+        <div className="container company_div_container">
+          {comp.map((item) => {
+            const { cName, closeTime, openTime, since, id, userId } = item;
+            return (
+              <RegisterComp
+                cName={cName}
+                closeTime={closeTime}
+                openTime={openTime}
+                since={since}
+                id={id}
+                userId={userId}
+              ></RegisterComp>
+            );
+          })}
         </div>
       </div>
     );

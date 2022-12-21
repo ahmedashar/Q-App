@@ -12,6 +12,7 @@ import Home from "../views/Home";
 
 import Login from "../views/Login";
 import Company from "../views/Company";
+import ComToken from "../views/ComToken";
 
 export default function Router() {
   const [authUser, setAuthUser] = useState(false);
@@ -45,6 +46,7 @@ export default function Router() {
           element={authUser ? <Home /> : <Navigate to="/" replace={true} />}
         />
         <Route path="/home/company" element={<Company />} />
+        <Route path="/home/company/:tokenId/:userId" element={<ComToken />} />
       </>
     )
   );
