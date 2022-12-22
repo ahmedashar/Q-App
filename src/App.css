@@ -1,13 +1,7 @@
 .App {
-  text-align: center;
-}
-* {
-  background-color: black;
+  /* text-align: center; */
+  width: 100%;
+  min-height: 100vh;
   color: white;
-}
-.SignIn_Btn {
-  background-color: #3f62a9;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 5px 10px;
+  background-color: black;
 }

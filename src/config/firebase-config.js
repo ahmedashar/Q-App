@@ -99,6 +99,20 @@ async function getComFromDb(id) {
   }
 }
 
+function addTokenToCompany(comData, tTime, tLimit, cId, date) {
+  const { cName, closeTime, openTime, imgUrl, userId, since } = comData;
+  return setDoc(doc(database, "companies", cId), {
+    cName,
+    closeTime,
+    openTime,
+    imgUrl,
+    userId,
+    since,
+    tokenLimit: tLimit,
+    tokenTime: tTime,
+    tokenDate: date,
+  });
+}
 // .then((re) => {
 //   console.log(re);
 //   console.log("After Login: " + re.user.uid);
@@ -127,4 +141,5 @@ export {
   addCompanyToDb,
   getCompaniesFromDb,
   getComFromDb,
+  addTokenToCompany,
 };

@@ -4,7 +4,9 @@ import {
   uploadImage,
   addCompanyToDb,
   getCompaniesFromDb,
+  authentication,
 } from "../../config/firebase-config";
+
 import "./style.css";
 
 const Company = () => {
@@ -39,19 +41,24 @@ const Company = () => {
   // view companies and add new company
   if (viewForm === false) {
     return (
-      <div>
-        <h2 style={{ color: "#4ecbc7" }}>Register New Company</h2>
-        <div>
-          <button
-            onClick={() => {
-              setViewForm(true);
-            }}
-          >
-            Click here
-          </button>
+      <div className="container">
+        <div className="text-center">
+          <h2 style={{ color: "#4ecbc7" }}>Register New Company</h2>
+          <div>
+            <button
+              className="btn btn-dark color"
+              onClick={() => {
+                setViewForm(true);
+              }}
+            >
+              Click here
+            </button>
+          </div>
         </div>
 
-        <h2 style={{ paddingTop: "50px", color: "#4ecbc7" }}>
+        <h2
+          style={{ paddingTop: "50px", color: "#4ecbc7", textAlign: "center" }}
+        >
           Registered Companies
         </h2>
         <div className="container company_div_container">
@@ -83,7 +90,7 @@ const Company = () => {
           border: "1px solid grey",
         }}
       >
-        <h1>FORM FOR ADDING NEW COMPANY</h1>
+        <h1 className="color">Add Company</h1>
         <label>
           Enter Your Company Name:
           <input
@@ -137,7 +144,9 @@ const Company = () => {
           }}
         />
         <br />
-        <button onClick={addCompanytoFirebase}>Submit</button>
+        <button className="btn btn-dark color" onClick={addCompanytoFirebase}>
+          Submit
+        </button>
       </div>
     );
   }

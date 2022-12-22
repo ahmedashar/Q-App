@@ -1,5 +1,5 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 import { authentication } from "../../config/firebase-config";
 
 const RegisterComp = (props) => {
@@ -12,27 +12,34 @@ const RegisterComp = (props) => {
     <div
       className="card"
       style={{
-        width: "29rem",
+        width: "400px",
+        height: "260px",
         border: "4px solid #4ECBC7",
         marginLeft: "5px",
         marginBottom: "5px",
+        backgroundColor: "black",
       }}
     >
-      <div className="card-body">
-        <h5 className="card-title">{cName}</h5>
+      <div className="card-body text-center pt-5">
+        <h3 className="card-title">{cName}</h3>
         <button
+          style={{ color: "#4ecbc7" }}
+          type="button"
+          className="btn btn-dark mt-3"
           onClick={() => {
             authentication.currentUser.uid == userId
               ? goToToken(id, userId)
-              : alert("Not your Company");
+              : swal("Sorry!", "Only Owner Of Company Manage Tokens!", "error");
           }}
         >
           Manage Tokens
         </button>
-        <p className="card-text">
+        <p className="card-text mt-3">
           <span>Open: {openTime} </span> | <span> Close: {closeTime}</span>
         </p>
-        <p style={{ marginBottom: "0px", fontSize: "14px" }}>Since: {since}</p>
+        <p style={{ marginBottom: "0px", fontSize: "14px", color: "grey" }}>
+          Since: {since}
+        </p>
       </div>
     </div>
   );
