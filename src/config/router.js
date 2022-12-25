@@ -13,6 +13,7 @@ import Home from "../views/Home";
 import Login from "../views/Login";
 import Company from "../views/Company";
 import ComToken from "../views/ComToken";
+import User from "../views/User";
 
 export default function Router() {
   const [authUser, setAuthUser] = useState(false);
@@ -47,6 +48,7 @@ export default function Router() {
         />
         <Route path="/home/company" element={<Company />} />
         <Route path="/home/company/:tokenId/:userId" element={<ComToken />} />
+        <Route path="/user" element={<User />} />
       </>
     )
   );

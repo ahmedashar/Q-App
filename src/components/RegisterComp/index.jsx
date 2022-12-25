@@ -40,6 +40,12 @@ const RegisterComp = (props) => {
         <p style={{ marginBottom: "0px", fontSize: "14px", color: "grey" }}>
           Since: {since}
         </p>
+        {/* <button
+          className="btn btn-danger"
+          style={{ position: "absolute", top: "0" }}
+        >
+          Delete Company
+        </button> */}
       </div>
     </div>
   );

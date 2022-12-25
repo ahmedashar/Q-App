@@ -48,7 +48,12 @@ export default function Home() {
         style={{ width: "1000px", margin: "auto", border: "2px solid #4ecbc7" }}
       >
         <div className="col-4 text-center pt-5">
-          <button className="btn btn-dark color mt-5">
+          <button
+            onClick={() => {
+              navigate("/user");
+            }}
+            className="btn btn-dark color mt-5"
+          >
             Click here (Normal User)
           </button>
         </div>

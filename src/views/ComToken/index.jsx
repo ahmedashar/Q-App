@@ -18,7 +18,7 @@ const ComToken = () => {
   };
   // set token into company database in firestore
   const addTokenInfoToDB = async (tTime, tLimit, cId) => {
-    const date = new Date().getDate();
+    const date = new Date().toLocaleDateString();
     try {
       await addTokenToCompany(comData, tTime, tLimit, cId, date);
       await getCompData();
@@ -77,7 +77,9 @@ const ComToken = () => {
         </div>
         <div className="col-4 py-4">
           <span className="color token_span">Token Sold: </span>{" "}
-          <span className="token_span">0</span>
+          <span className="token_span">
+            {comData.tokenSold ? comData.tokenSold : 0}
+          </span>
         </div>
       </div>
       {/* token info end */}

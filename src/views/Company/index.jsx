@@ -32,7 +32,7 @@ const Company = () => {
   const getCompanyData = async () => {
     const rCompanies = await getCompaniesFromDb();
     setComp(rCompanies);
-    console.log(rCompanies);
+    console.log("return: " + rCompanies);
   };
 
   useEffect(() => {
@@ -62,19 +62,23 @@ const Company = () => {
           Registered Companies
         </h2>
         <div className="container company_div_container">
-          {comp.map((item) => {
-            const { cName, closeTime, openTime, since, id, userId } = item;
-            return (
-              <RegisterComp
-                cName={cName}
-                closeTime={closeTime}
-                openTime={openTime}
-                since={since}
-                id={id}
-                userId={userId}
-              ></RegisterComp>
-            );
-          })}
+          {comp.length == 0 ? (
+            <p>No Registered Company</p>
+          ) : (
+            comp.map((item) => {
+              const { cName, closeTime, openTime, since, id, userId } = item;
+              return (
+                <RegisterComp
+                  cName={cName}
+                  closeTime={closeTime}
+                  openTime={openTime}
+                  since={since}
+                  id={id}
+                  userId={userId}
+                ></RegisterComp>
+              );
+            })
+          )}
         </div>
       </div>
     );

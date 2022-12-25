@@ -46,6 +46,7 @@ const addUserToDB = async (userInfo) => {
       uid,
       displayName,
       email,
+      tokenInfo: [],
     });
 
     console.log("userInfo store in Firestore by: " + displayName);
@@ -78,9 +79,15 @@ function addCompanyToDb(cName, since, openTime, closeTime, imgUrl) {
 async function getCompaniesFromDb() {
   const querySnapshot = await getDocs(collection(database, "companies"));
   const companies = [];
+  const userID = authentication.currentUser.uid;
+  console.log("M.ahmed" + userID);
 
   querySnapshot.forEach((doc) => {
-    companies.push({ id: doc.id, ...doc.data() });
+    const x = { ...doc.data() };
+
+    if (x.userId == userID) {
+      companies.push({ id: doc.id, ...doc.data() });
+    }
   });
   return companies;
 }
@@ -111,7 +118,20 @@ function addTokenToCompany(comData, tTime, tLimit, cId, date) {
     tokenLimit: tLimit,
     tokenTime: tTime,
     tokenDate: date,
+    soldTo: [],
+    tokenSold: 0,
   });
+}
+
+// for User , get all companies data
+async function getAllCompaniesFromDb() {
+  const querySnapshot = await getDocs(collection(database, "companies"));
+  const companies = [];
+
+  querySnapshot.forEach((doc) => {
+    companies.push({ id: doc.id, ...doc.data() });
+  });
+  return companies;
 }
 // .then((re) => {
 //   console.log(re);
@@ -142,4 +162,5 @@ export {
   getCompaniesFromDb,
   getComFromDb,
   addTokenToCompany,
+  getAllCompaniesFromDb,
 };
